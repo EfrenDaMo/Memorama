@@ -40,8 +40,7 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
         try {
             Carta.setImagenTrasera(Utilidades.cargarImagen("reversaCarta.png", Datos.ANCHO_CARTA, Datos.ALTO_CARTA));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al cargar el reverso de la image", "Error!",
-                    JOptionPane.ERROR_MESSAGE);
+            Carta.generarImagenReverosRespaldo();
         }
     }
 

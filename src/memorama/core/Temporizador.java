@@ -57,7 +57,7 @@ public class Temporizador {
 
     public void reiniciar() {
         temporizador.stop();
-        segundosRestantes = 10;
+        segundosRestantes = 300;
         actualizarEtiquetaTiempo();
     }
 
