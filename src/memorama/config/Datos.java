@@ -4,6 +4,7 @@
  */
 package memorama.config;
 
+import java.awt.Dimension;
 import java.awt.Font;
 
 /**
@@ -21,4 +22,6 @@ public class Datos {
     public static final int ANCHO_PANTALLA = 720;
     public static final int TOTAL_PAREJAS = (FILAS * COLUMNAS) / 2;
     public static final Font FUENTE = new Font("Dialog", Font.BOLD, 24);
+    public static final Font FUENTE_MENU = new Font("Dialog", Font.BOLD, 36);
+    public static final Dimension TAMANIO_BOTONES_MENU = new Dimension(240, 60);
 }

@@ -4,9 +4,13 @@
  */
 package memorama.ui;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import memorama.core.Juego;
+import memorama.ui.VistaJuego;
 
 /**
  *
@@ -24,7 +28,7 @@ public class InterfazGrafica extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVistaActual(new VistaJuego(juego));
+        setVistaActual(new VistaMenuPrincipal(juego));
         setVisible(true);
     }
 
@@ -37,5 +41,24 @@ public class InterfazGrafica extends JFrame {
         add(vistaActual);
         revalidate();
         repaint();
+    }
+
+    private void configurarEventosTeclado() {
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (vistaActual instanceof VistaJuego vistajuego) {
+                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                        if (juego.estaPausado()) {
+                            juego.resumirJuego();
+                        } else {
+                            juego.pausarJuego();
+                        }
+                    }
+
+					vistajuego.actualizar();
+                }
+            }
+        });
     }
 }

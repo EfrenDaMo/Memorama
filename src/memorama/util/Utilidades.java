@@ -63,4 +63,24 @@ public class Utilidades {
 
         return boton;
     }
+
+    public static JLabel crearEtiquetaMenu(String texto) {
+        JLabel etiqueta = new JLabel(texto);
+
+        etiqueta.setFont(Datos.FUENTE_MENU);
+        etiqueta.setHorizontalAlignment(JLabel.CENTER);
+
+        return etiqueta;
+    }
+
+    public static JButton crearBotonMenu(String texto, Consumer<ActionEvent> manejador, Dimension tamanio) {
+        JButton boton = new JButton(texto);
+
+        boton.setFont(Datos.FUENTE_MENU);
+        boton.addActionListener(e -> manejador.accept(e));
+        boton.setPreferredSize(tamanio);
+        boton.setMaximumSize(tamanio);
+
+        return boton;
+    }
 }

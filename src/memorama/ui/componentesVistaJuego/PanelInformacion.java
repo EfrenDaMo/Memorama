@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import memorama.config.Datos;
+import memorama.core.Juego;
 import memorama.core.Jugador;
 import memorama.util.Utilidades;
 
@@ -22,6 +23,7 @@ import memorama.util.Utilidades;
  * @author efren
  */
 public class PanelInformacion extends JPanel {
+    private final Juego juego;
     private final Jugador jugador;
 
     private JLabel etiquetaJugador;
@@ -30,8 +32,9 @@ public class PanelInformacion extends JPanel {
     private JButton botonPausar;
     private JButton botonAbandonar;
 
-    public PanelInformacion(Jugador jugador) {
+    public PanelInformacion(Jugador jugador, Juego juego) {
         this.jugador = jugador;
+        this.juego = juego;
 
         jugador.agregarListenerCambioPropiedad(e -> actualizar());
         setLayout(new BorderLayout());
@@ -43,7 +46,8 @@ public class PanelInformacion extends JPanel {
         etiquetaJugador = Utilidades.crearEtiqueta("Jugador " + jugador.getId());
         etiquetaPuntaje = Utilidades.crearEtiqueta("00");
         etiquetaTurno = Utilidades.crearEtiqueta("Turno: " + (jugador.esTurno() ? "Si" : "No"));
-        botonPausar = new JButton("Pausa");
+
+        botonPausar = Utilidades.crearBotonMenu("Pausar", e -> juego.pausarJuego(), Datos.TAMANIO_BOTONES_MENU);
         botonAbandonar = new JButton("Abandonar");
 
         JPanel centro = new JPanel(new BorderLayout());

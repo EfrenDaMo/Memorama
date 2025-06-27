@@ -19,8 +19,6 @@ public class Memorama {
     public static void main(String[] args) {
         Juego juego = new Juego();
         InterfazGrafica interfaz = new InterfazGrafica(juego);
-
-        juego.getTemporizador().iniciar();
     }
 
 }

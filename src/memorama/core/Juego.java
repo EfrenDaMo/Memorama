@@ -24,6 +24,7 @@ public class Juego {
     private Jugador jugadorActual;
     private Carta primeraCartaSeleccionada;
     private Carta segundaCartaSeleccionada;
+    private boolean pausado;
     private boolean bloqueado;
     private int cartasRestantes;
 
@@ -126,6 +127,23 @@ public class Juego {
         jugador2.reiniciarPuntaje();
     }
 
+    public void iniciarJuego() {
+        temporizador.iniciar();
+        System.out.println("Juego iniciado");
+    }
+
+    public void mostrarMenuPrincipal() {
+        System.out.println("Menu principal");
+    }
+
+    public void pausarJuego() {
+        pausado = true;
+    }
+
+    public void resumirJuego() {
+        pausado = false;
+    }
+
     public void setEscuchador(EscuchadorJuego escuchador) {
         this.escuchador = escuchador;
     }
@@ -148,5 +166,9 @@ public class Juego {
 
     public boolean estaBloqueado() {
         return bloqueado;
+    }
+
+    public boolean estaPausado() {
+        return pausado;
     }
 }
