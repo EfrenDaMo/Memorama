@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 public class PanelJuego extends JPanel {
     private final Juego juego;
 
-    private JLabel etiquetaTemporizador;
+    private JLabel etiquetaTiempo;
     private BufferedImage imagenFondo;
     private PanelTablero panelTablero;
 
@@ -41,20 +41,16 @@ public class PanelJuego extends JPanel {
             imagenFondo = null;
         }
 
-        etiquetaTemporizador = juego.getTemporizador().getEtiquetaTemporizador();
+        etiquetaTiempo = juego.getTemporizador().getEtiquetaTiempo();
         panelTablero = new PanelTablero(juego);
 
-        add(etiquetaTemporizador, BorderLayout.NORTH);
+        add(etiquetaTiempo, BorderLayout.NORTH);
         add(panelTablero, BorderLayout.CENTER);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        dibujarFondo(g);
-    }
-
-    private void dibujarFondo(Graphics g) {
         if (imagenFondo != null) {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
         }

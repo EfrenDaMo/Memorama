@@ -4,11 +4,8 @@
  */
 package memorama.core;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JLabel;
-import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.event.*;
 
 import memorama.util.Utilidades;
 
@@ -17,46 +14,46 @@ import memorama.util.Utilidades;
  * @author efren
  */
 public class Temporizador {
-    private final JLabel etiquetaTemporizador;
-    private Timer temporizadorDeJuego;
+    private final JLabel etiquetaTiempo;
+    private Timer temporizador;
     private int segundosRestantes = 300;
 
     public Temporizador() {
-        etiquetaTemporizador = Utilidades.crearEtiqueta("05:00");
+        etiquetaTiempo = Utilidades.crearEtiqueta("05:00");
 
-        temporizadorDeJuego = new Timer(1000, new ActionListener() {
+        temporizador = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 segundosRestantes--;
-                actualizarEtiquetaTemporizador();
+                actualizarEtiquetaTiempo();
 
                 if (segundosRestantes <= 0) {
-                    temporizadorDeJuego.stop();
+                    temporizador.stop();
                 }
             }
         });
     }
 
-    public void empezarTemporizador() {
-        temporizadorDeJuego.start();
+    public void iniciar() {
+        temporizador.start();
     }
 
-    public void pausarTemporizador() {
-        temporizadorDeJuego.stop();
+    public void pausar() {
+        temporizador.stop();
     }
 
-    public void reiniciarTemporizador() {
-        temporizadorDeJuego.restart();
+    public void reiniciar() {
+        temporizador.restart();
     }
 
-    public void actualizarEtiquetaTemporizador() {
+    public void actualizarEtiquetaTiempo() {
         int mins = segundosRestantes / 60;
         int secs = segundosRestantes % 60;
 
-        etiquetaTemporizador.setText(String.format("%02d:%02d", mins, secs));
+        etiquetaTiempo.setText(String.format("%02d:%02d", mins, secs));
     }
 
-    public JLabel getEtiquetaTemporizador() {
-        return etiquetaTemporizador;
+    public JLabel getEtiquetaTiempo() {
+        return etiquetaTiempo;
     }
 }

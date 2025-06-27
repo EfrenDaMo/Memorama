@@ -23,10 +23,9 @@ public class MaquinaEstadoJuego {
         return estadoActual;
     }
 
-    public boolean transicionarA(EstadoJuego estadoNuevo) {
-        if (estadoActual.puedeTransicionarA(estadoNuevo)) {
-            EstadoJuego estadoPrevio = estadoActual;
-            estadoActual = estadoNuevo;
+    public boolean transicionar(EstadoJuego nuevoEstado) {
+        if (estadoActual.puedeTransicionarA(nuevoEstado)) {
+            estadoActual = nuevoEstado;
 
             return true;
         }
@@ -48,23 +47,23 @@ public class MaquinaEstadoJuego {
     }
 
     public void iniciarJuego() {
-        transicionarA(EstadoJuego.JUGANDO);
+        transicionar(EstadoJuego.JUGANDO);
     }
 
     public void pausarJuego() {
-        transicionarA(EstadoJuego.EN_PAUSA);
+        transicionar(EstadoJuego.EN_PAUSA);
     }
 
     public void renudarJuego() {
-        transicionarA(EstadoJuego.JUGANDO);
+        transicionar(EstadoJuego.JUGANDO);
     }
 
     public void renunciarJuego() {
-        transicionarA(EstadoJuego.TERMINADO);
+        transicionar(EstadoJuego.TERMINADO);
     }
 
     public void regresarAMenu() {
-        transicionarA(EstadoJuego.MENU_PRINCIPAL);
+        transicionar(EstadoJuego.MENU_PRINCIPAL);
     }
 
 }

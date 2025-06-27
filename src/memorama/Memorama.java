@@ -5,7 +5,7 @@
 package memorama;
 
 import memorama.core.Juego;
-import memorama.ui.GUI;
+import memorama.ui.InterfazGrafica;
 
 /**
  *
@@ -18,9 +18,9 @@ public class Memorama {
      */
     public static void main(String[] args) {
         Juego juego = new Juego();
-        GUI gui = new GUI(juego);
+        InterfazGrafica interfaz = new InterfazGrafica(juego);
 
-        juego.getTemporizador().empezarTemporizador();
+        juego.getTemporizador().iniciar();
     }
 
 }

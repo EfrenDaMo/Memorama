@@ -9,5 +9,5 @@ package memorama.core;
  * @author efren
  */
 public interface EscuchadorJuego {
-    void enCambioDeEstadoJuego();
+    void alCambiarEstadoJuego();
 }

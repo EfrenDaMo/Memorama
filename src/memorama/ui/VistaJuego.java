@@ -25,7 +25,6 @@ public class VistaJuego extends JPanel {
 
     public VistaJuego(Juego juego) {
         this.juego = juego;
-
         setLayout(new BorderLayout());
 
         panelJugador1 = new PanelInformacion(juego.getJugador1());

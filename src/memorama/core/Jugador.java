@@ -16,8 +16,7 @@ public class Jugador {
 
     private int puntaje;
     private boolean turno;
-
-    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private PropertyChangeSupport soporte = new PropertyChangeSupport(this);
 
     public Jugador(int id) {
         this.id = id;
@@ -25,20 +24,20 @@ public class Jugador {
         this.turno = false;
     }
 
-    public void agregarPropertyChangeListener(PropertyChangeListener l) {
-        support.addPropertyChangeListener(l);
+    public void agregarListenerCambioPropiedad(PropertyChangeListener listener) {
+        soporte.addPropertyChangeListener(listener);
     }
 
     public void aumentarPuntaje(int cantidad) {
         if (cantidad < 0)
             throw new IllegalArgumentException("No se puede decrementar el puntaje");
 
-        int actual = this.puntaje;
+        int anterior = this.puntaje;
         this.puntaje += cantidad;
-        support.firePropertyChange("puntaje", actual, puntaje);
+        soporte.firePropertyChange("puntaje", anterior, puntaje);
     }
 
-    public void resetearPuntaje() {
+    public void reiniciarPuntaje() {
         puntaje = 0;
     }
 
@@ -55,8 +54,8 @@ public class Jugador {
     }
 
     public void setTurno(boolean turno) {
-        boolean actual = this.turno;
+        boolean anterior = this.turno;
         this.turno = turno;
-        support.firePropertyChange("turno", actual, turno);
+        soporte.firePropertyChange("turno", anterior, turno);
     }
 }

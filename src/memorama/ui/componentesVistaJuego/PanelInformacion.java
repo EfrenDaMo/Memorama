@@ -28,12 +28,12 @@ public class PanelInformacion extends JPanel {
     private JLabel etiquetaPuntaje;
     private JLabel etiquetaTurno;
     private JButton botonPausar;
-    private JButton botonRenunciar;
+    private JButton botonAbandonar;
 
     public PanelInformacion(Jugador jugador) {
         this.jugador = jugador;
 
-        jugador.agregarPropertyChangeListener(e -> actualizar());
+        jugador.agregarListenerCambioPropiedad(e -> actualizar());
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(213, 720));
         inicializarComponentes();
@@ -44,15 +44,15 @@ public class PanelInformacion extends JPanel {
         etiquetaPuntaje = Utilidades.crearEtiqueta("00");
         etiquetaTurno = Utilidades.crearEtiqueta("Turno: " + (jugador.esTurno() ? "Si" : "No"));
         botonPausar = new JButton("Pausa");
-        botonRenunciar = new JButton("Renunciar");
+        botonAbandonar = new JButton("Abandonar");
 
         JPanel centro = new JPanel(new BorderLayout());
-        JPanel sur = new JPanel(new BorderLayout());
-
         centro.add(etiquetaPuntaje, BorderLayout.NORTH);
         centro.add(etiquetaTurno, BorderLayout.SOUTH);
+
+        JPanel sur = new JPanel(new BorderLayout());
         sur.add(botonPausar, BorderLayout.WEST);
-        sur.add(botonRenunciar, BorderLayout.EAST);
+        sur.add(botonAbandonar, BorderLayout.EAST);
 
         add(etiquetaJugador, BorderLayout.NORTH);
         add(centro, BorderLayout.CENTER);

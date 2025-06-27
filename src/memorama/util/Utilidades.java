@@ -23,8 +23,9 @@ import memorama.config.Datos;
 public class Utilidades {
     private static File obtenerArchivo(String ruta) {
         File archivo = new File(ruta);
-        if (!archivo.exists())
+        if (!archivo.exists()) {
             archivo = new File("src/memorama/recursos/" + ruta);
+        }
 
         return archivo;
     }
@@ -55,10 +56,10 @@ public class Utilidades {
         return etiqueta;
     }
 
-    public static JButton crearBoton(String texto, Consumer<ActionEvent> handler) {
+    public static JButton crearBoton(String texto, Consumer<ActionEvent> manejador) {
         JButton boton = new JButton(texto);
 
-        boton.addActionListener(e -> handler.accept(e));
+        boton.addActionListener(e -> manejador.accept(e));
 
         return boton;
     }

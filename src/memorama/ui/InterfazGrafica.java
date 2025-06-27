@@ -12,12 +12,11 @@ import memorama.core.Juego;
  *
  * @author efren
  */
-public class GUI extends JFrame {
+public class InterfazGrafica extends JFrame {
     private final Juego juego;
-
     private JPanel vistaActual;
 
-    public GUI(Juego juego) {
+    public InterfazGrafica(Juego juego) {
         this.juego = juego;
 
         setTitle("MEMORAMA!!!");
@@ -25,19 +24,18 @@ public class GUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        setVistaActua(new VistaJuego(juego));
+        setVistaActual(new VistaJuego(juego));
         setVisible(true);
     }
 
-    public void setVistaActua(JPanel vistaNueva) {
-        if (vistaActual == null) {
-            vistaActual = vistaNueva;
-            add(vistaActual);
-        } else {
+    public void setVistaActual(JPanel nuevaVista) {
+        if (vistaActual != null) {
             remove(vistaActual);
-            vistaActual = vistaNueva;
-            add(vistaActual);
         }
+
+        vistaActual = nuevaVista;
+        add(vistaActual);
+        revalidate();
+        repaint();
     }
 }

@@ -5,7 +5,6 @@
 package memorama.core;
 
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -20,11 +19,11 @@ public class Juego {
     private final Jugador jugador2;
     private final Temporizador temporizador;
 
-    private EscuchadorJuego escuchadorJuego;
+    private EscuchadorJuego escuchador;
     private ArrayList<Carta> cartas;
     private Jugador jugadorActual;
-    private Carta primeraSeleccion;
-    private Carta segundaSeleccion;
+    private Carta primeraCartaSeleccionada;
+    private Carta segundaCartaSeleccionada;
     private boolean bloqueado;
     private int cartasRestantes;
 
@@ -40,39 +39,39 @@ public class Juego {
     }
 
     public void manejarClicCarta(Carta carta) {
-        if (bloqueado || carta.isEmparejada() || carta.isVolteada())
+        if (bloqueado || carta.estaEmparejada() || carta.estaVolteada())
             return;
 
         carta.voltear();
 
-        if (primeraSeleccion == null) {
-            primeraSeleccion = carta;
+        if (primeraCartaSeleccionada == null) {
+            primeraCartaSeleccionada = carta;
         } else {
-            segundaSeleccion = carta;
+            segundaCartaSeleccionada = carta;
 
-            comprobarPareja();
+            verificarPareja();
         }
     }
 
-    private void comprobarPareja() {
+    private void verificarPareja() {
         bloqueado = true;
 
-        if (primeraSeleccion.getId() == segundaSeleccion.getId()) {
+        if (primeraCartaSeleccionada.getId() == segundaCartaSeleccionada.getId()) {
             jugadorActual.aumentarPuntaje(1);
 
             Timer temporizadorEspera = new Timer(1000, e -> {
-                primeraSeleccion.setEmparejada(true);
-                segundaSeleccion.setEmparejada(true);
+                primeraCartaSeleccionada.marcarComoEmparejada(true);
+                segundaCartaSeleccionada.marcarComoEmparejada(true);
                 cartasRestantes -= 2;
 
                 if (cartasRestantes > 0) {
-                    resetearSelecciones();
-                    notificarUI();
+                    reiniciarSelecciones();
+                    notificarInterfaz();
                     bloqueado = false;
                 } else {
                     bloqueado = false;
-                    notificarUI();
-                    terminarJuego();
+                    notificarInterfaz();
+                    finalizarJuego();
                 }
             });
             temporizadorEspera.setRepeats(false);
@@ -88,47 +87,47 @@ public class Juego {
         jugadorActual.setTurno(true);
 
         Timer temporizadorEspera = new Timer(1000, e -> {
-            primeraSeleccion.voltear();
-            segundaSeleccion.voltear();
-            resetearSelecciones();
+            primeraCartaSeleccionada.voltear();
+            segundaCartaSeleccionada.voltear();
+            reiniciarSelecciones();
+            notificarInterfaz();
             bloqueado = false;
-            notificarUI();
         });
         temporizadorEspera.setRepeats(false);
         temporizadorEspera.start();
     }
 
-    private void resetearSelecciones() {
-        primeraSeleccion = null;
-        segundaSeleccion = null;
+    private void reiniciarSelecciones() {
+        primeraCartaSeleccionada = null;
+        segundaCartaSeleccionada = null;
     }
 
-    private void terminarJuego() {
+    private void finalizarJuego() {
         if (jugador1.getPuntaje() > jugador2.getPuntaje()) {
-            JOptionPane.showMessageDialog(null, "Gano el jugador 1!");
+            JOptionPane.showMessageDialog(null, "¡Gano el jugador 1!");
         } else if (jugador1.getPuntaje() < jugador2.getPuntaje()) {
-            JOptionPane.showMessageDialog(null, "Gano el jugador 2!");
+            JOptionPane.showMessageDialog(null, "¡Gano el jugador 2!");
         } else {
-            JOptionPane.showMessageDialog(null, "Es empate!");
+            JOptionPane.showMessageDialog(null, "¡Empate!");
         }
     }
 
-    public void notificarUI() {
-        if (escuchadorJuego == null)
+    public void notificarInterfaz() {
+        if (escuchador == null)
             return;
 
-        escuchadorJuego.enCambioDeEstadoJuego();
+        escuchador.alCambiarEstadoJuego();
     }
 
     public void reiniciarJuego() {
         this.cartas = FabricaCarta.crearCartas();
         this.cartasRestantes = cartas.size();
-        jugador1.resetearPuntaje();
-        jugador2.resetearPuntaje();
+        jugador1.reiniciarPuntaje();
+        jugador2.reiniciarPuntaje();
     }
 
-    public void setEscuchadorJuego(EscuchadorJuego escuchadorJuego) {
-        this.escuchadorJuego = escuchadorJuego;
+    public void setEscuchador(EscuchadorJuego escuchador) {
+        this.escuchador = escuchador;
     }
 
     public ArrayList<Carta> getCartas() {
@@ -147,7 +146,7 @@ public class Juego {
         return temporizador;
     }
 
-    public boolean isBloqueado() {
+    public boolean estaBloqueado() {
         return bloqueado;
     }
 }

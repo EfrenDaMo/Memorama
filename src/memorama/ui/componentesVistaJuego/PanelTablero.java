@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import memorama.config.Datos;
@@ -27,18 +28,20 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
 
     public PanelTablero(Juego juego) {
         this.juego = juego;
-        juego.setEscuchadorJuego(this);
+        juego.setEscuchador(this);
 
         setLayout(null);
         setOpaque(false);
-        inicializarComponentes();
+        inicializar();
         configurarEventosMouse();
     }
 
-    private void inicializarComponentes() {
+    private void inicializar() {
         try {
             Carta.setImagenTrasera(Utilidades.cargarImagen("reversaCarta.png", Datos.ANCHO_CARTA, Datos.ALTO_CARTA));
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al cargar el reverso de la image", "Error!",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -46,12 +49,11 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (juego.isBloqueado())
+                if (juego.estaBloqueado())
                     return;
 
                 for (Carta carta : juego.getCartas()) {
-                    if (carta.hasPuntos(e.getPoint())) {
-                        System.out.println("Carta con id: " + carta.getId() + " se le ha hecho clic");
+                    if (carta.contienePunto(e.getPoint())) {
                         juego.manejarClicCarta(carta);
                         repaint();
                         break;
@@ -64,17 +66,13 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        dibujarCartas(g);
-    }
-
-    @Override
-    public void enCambioDeEstadoJuego() {
-        repaint();
-    }
-
-    private void dibujarCartas(Graphics g) {
         for (Carta carta : juego.getCartas()) {
             carta.dibujar(g);
         }
+    }
+
+    @Override
+    public void alCambiarEstadoJuego() {
+        repaint();
     }
 }

@@ -12,11 +12,11 @@ import java.awt.image.BufferedImage;
  * @author efren
  */
 public class Carta {
-    private static Image imagenTrasera;
+    private static Image reverso;
 
     private final int id;
     private final int alto, ancho;
-    private final BufferedImage imagenDelantera;
+    private final BufferedImage frente;
 
     private int x, y;
     private boolean volteada, emparejada;
@@ -25,11 +25,11 @@ public class Carta {
         this.id = id;
         this.alto = alto;
         this.ancho = ancho;
-        this.imagenDelantera = imagenDelantera;
+        this.frente = imagenDelantera;
     }
 
     public static void setImagenTrasera(Image imagen) {
-        imagenTrasera = imagen;
+        reverso = imagen;
     }
 
     public void voltear() {
@@ -43,7 +43,7 @@ public class Carta {
         if (emparejada)
             return;
 
-        Image imagenActual = volteada ? imagenDelantera : imagenTrasera;
+        Image imagenActual = volteada ? frente : reverso;
         g.drawImage(imagenActual, x, y, ancho, alto, null);
     }
 
@@ -59,24 +59,24 @@ public class Carta {
         return y;
     }
 
-    public void setEmparejada(boolean emparejada) {
-        this.emparejada = emparejada;
-    }
-
     public void setPosicion(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public boolean isVolteada() {
+    public boolean estaVolteada() {
         return volteada;
     }
 
-    public boolean isEmparejada() {
+    public void marcarComoEmparejada(boolean emparejada) {
+        this.emparejada = emparejada;
+    }
+
+    public boolean estaEmparejada() {
         return emparejada;
     }
 
-    public boolean hasPuntos(Point punto) {
+    public boolean contienePunto(Point punto) {
         return new Rectangle(x, y, ancho, alto).contains(punto);
     }
 }

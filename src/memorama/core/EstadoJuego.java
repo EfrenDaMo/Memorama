@@ -15,12 +15,12 @@ public enum EstadoJuego {
     TERMINADO;
 
     public boolean puedeTransicionarA(EstadoJuego nuevoEstado) {
-		return switch (nuevoEstado) {
-			case MENU_PRINCIPAL -> nuevoEstado == JUGANDO;
-			case JUGANDO -> nuevoEstado == EN_PAUSA || nuevoEstado == TERMINADO;
-			case EN_PAUSA -> nuevoEstado == JUGANDO || nuevoEstado == MENU_PRINCIPAL;
-			case TERMINADO -> nuevoEstado == MENU_PRINCIPAL || nuevoEstado == JUGANDO;
-			default -> false;
-		};
+        return switch (this) {
+            case MENU_PRINCIPAL -> nuevoEstado == JUGANDO;
+            case JUGANDO -> nuevoEstado == EN_PAUSA || nuevoEstado == TERMINADO;
+            case EN_PAUSA -> nuevoEstado == JUGANDO || nuevoEstado == MENU_PRINCIPAL;
+            case TERMINADO -> nuevoEstado == MENU_PRINCIPAL || nuevoEstado == JUGANDO;
+            default -> false;
+        };
     }
 }
