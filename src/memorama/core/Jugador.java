@@ -9,7 +9,8 @@ package memorama.core;
  * @author efren
  */
 public class Jugador {
-    private int id;
+    private final int id;
+
     private int puntaje;
     private boolean turno;
 
