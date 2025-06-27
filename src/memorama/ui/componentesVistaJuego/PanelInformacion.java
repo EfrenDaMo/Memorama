@@ -44,11 +44,13 @@ public class PanelInformacion extends JPanel {
 
     private void inicializarComponentes() {
         etiquetaJugador = Utilidades.crearEtiqueta("Jugador " + jugador.getId());
-        etiquetaPuntaje = Utilidades.crearEtiqueta("00");
+        etiquetaPuntaje = Utilidades.crearEtiqueta(String.valueOf(jugador.getPuntaje()));
         etiquetaTurno = Utilidades.crearEtiqueta("Turno: " + (jugador.esTurno() ? "Si" : "No"));
 
-        botonPausar = Utilidades.crearBotonMenu("Pausar", e -> juego.pausarJuego(), Datos.TAMANIO_BOTONES_MENU);
-        botonAbandonar = new JButton("Abandonar");
+        botonPausar = Utilidades.crearBoton("Pausar", e -> juego.pausarJuego());
+        botonAbandonar = Utilidades.crearBoton("Abandonar", e -> {
+            juego.abandonarPartida(jugador);
+        });
 
         JPanel centro = new JPanel(new BorderLayout());
         centro.add(etiquetaPuntaje, BorderLayout.NORTH);

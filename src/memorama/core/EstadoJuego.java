@@ -19,7 +19,7 @@ public enum EstadoJuego {
             case MENU_PRINCIPAL -> nuevoEstado == JUGANDO;
             case JUGANDO -> nuevoEstado == EN_PAUSA || nuevoEstado == TERMINADO;
             case EN_PAUSA -> nuevoEstado == JUGANDO || nuevoEstado == MENU_PRINCIPAL;
-            case TERMINADO -> nuevoEstado == MENU_PRINCIPAL || nuevoEstado == JUGANDO;
+            case TERMINADO -> nuevoEstado == MENU_PRINCIPAL;
             default -> false;
         };
     }

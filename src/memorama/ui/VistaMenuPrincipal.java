@@ -48,7 +48,9 @@ public class VistaMenuPrincipal extends JPanel {
         panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        botonJugar = Utilidades.crearBotonMenu("Jugar", e -> juego.iniciarJuego(), Datos.TAMANIO_BOTONES_MENU);
+        botonJugar = Utilidades.crearBotonMenu("Jugar", e -> {
+            juego.iniciarJuego();
+        }, Datos.TAMANIO_BOTONES_MENU);
         botonJugar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         botonCreditos = Utilidades.crearBotonMenu("Creditos", e -> mostrarCreditos(), Datos.TAMANIO_BOTONES_MENU);

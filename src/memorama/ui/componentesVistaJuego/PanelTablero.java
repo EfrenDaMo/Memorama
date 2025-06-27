@@ -28,7 +28,7 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
 
     public PanelTablero(Juego juego) {
         this.juego = juego;
-        juego.setEscuchador(this);
+        juego.addEscuchador(this);
 
         setLayout(null);
         setOpaque(false);

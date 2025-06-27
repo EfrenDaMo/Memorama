@@ -36,13 +36,14 @@ public class VistaMenuPausa extends JPanel {
 
     public VistaMenuPausa(Juego juego) {
         this.juego = juego;
-        // setLayout(new BorderLayout());
         setOpaque(false);
 
         inicializarComponentes();
     }
 
     private void inicializarComponentes() {
+        setLayout(new BorderLayout());
+
         JPanel overlay = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -51,8 +52,6 @@ public class VistaMenuPausa extends JPanel {
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
-
-        // overlay.setLayout(new BorderLayout());
         overlay.setOpaque(false);
 
         JPanel panelMenu = new JPanel(new BorderLayout());
@@ -65,23 +64,27 @@ public class VistaMenuPausa extends JPanel {
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		panelBotones.setOpaque(false);
 
         botonResumir = Utilidades.crearBotonMenu("Resumir", e -> juego.resumirJuego(),
                 Datos.TAMANIO_BOTONES_MENU);
         botonResumir.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        botonMenuPrincipal = Utilidades.crearBotonMenu("Resumir", e -> juego.mostrarMenuPrincipal(),
-                Datos.TAMANIO_BOTONES_MENU);
+        botonMenuPrincipal = Utilidades.crearBotonMenu("Menú Principal", e -> {
+            juego.mostrarMenuPrincipal();
+        }, Datos.TAMANIO_BOTONES_MENU);
         botonMenuPrincipal.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        botonSalir = Utilidades.crearBotonMenu("Resumir", e -> System.exit(0), Datos.TAMANIO_BOTONES_MENU);
+        botonSalir = Utilidades.crearBotonMenu("Salir", e -> System.exit(0), Datos.TAMANIO_BOTONES_MENU);
         botonSalir.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        panelMenu.add(botonResumir);
-        panelMenu.add(Box.createRigidArea(new Dimension(0, 20)));
-        panelMenu.add(botonMenuPrincipal);
-        panelMenu.add(Box.createRigidArea(new Dimension(0, 20)));
-        panelMenu.add(botonSalir);
+        panelBotones.add(botonResumir);
+        panelBotones.add(Box.createRigidArea(new Dimension(0, 20)));
+        panelBotones.add(botonMenuPrincipal);
+        panelBotones.add(Box.createRigidArea(new Dimension(0, 20)));
+        panelBotones.add(botonSalir);
+
+		panelMenu.add(panelBotones, BorderLayout.CENTER);
 
         overlay.add(panelMenu);
         add(overlay);

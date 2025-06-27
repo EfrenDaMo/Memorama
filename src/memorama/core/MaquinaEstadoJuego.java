@@ -25,8 +25,10 @@ public class MaquinaEstadoJuego {
 
     public boolean transicionar(EstadoJuego nuevoEstado) {
         if (estadoActual.puedeTransicionarA(nuevoEstado)) {
+            EstadoJuego estadoPrevio = estadoActual;
             estadoActual = nuevoEstado;
-
+            ejecutarAccionesEntrada(estadoPrevio);
+            juego.notificarInterfaz();
             return true;
         }
 
@@ -36,12 +38,29 @@ public class MaquinaEstadoJuego {
     private void ejecutarAccionesEntrada(EstadoJuego estadoPrevio) {
         switch (estadoPrevio) {
             case JUGANDO:
+                if (estadoActual == EstadoJuego.EN_PAUSA) {
+                    juego.getTemporizador().pausar();
+                } else if (estadoActual == EstadoJuego.TERMINADO) {
+                    juego.getTemporizador().pausar();
+                }
                 break;
             case EN_PAUSA:
+                if (estadoActual == EstadoJuego.JUGANDO) {
+                    juego.getTemporizador().reanudar();
+                } else if (estadoActual == EstadoJuego.MENU_PRINCIPAL) {
+                    juego.reiniciarJuego();
+                }
                 break;
             case TERMINADO:
+                if (estadoActual == EstadoJuego.JUGANDO) {
+                    juego.reiniciarJuego();
+                    juego.getTemporizador().reiniciar();
+                }
                 break;
             case MENU_PRINCIPAL:
+                if (estadoActual == EstadoJuego.JUGANDO) {
+                    juego.reiniciarJuego();
+                }
                 break;
         }
     }

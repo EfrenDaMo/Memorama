@@ -7,6 +7,7 @@ package memorama.core;
 import javax.swing.*;
 import java.awt.event.*;
 
+import memorama.core.Juego;
 import memorama.util.Utilidades;
 
 /**
@@ -14,11 +15,14 @@ import memorama.util.Utilidades;
  * @author efren
  */
 public class Temporizador {
+    private final Juego juego;
+
     private final JLabel etiquetaTiempo;
     private Timer temporizador;
     private int segundosRestantes = 300;
 
-    public Temporizador() {
+    public Temporizador(Juego juego) {
+        this.juego = juego;
         etiquetaTiempo = Utilidades.crearEtiqueta("05:00");
 
         temporizador = new Timer(1000, new ActionListener() {
@@ -28,6 +32,7 @@ public class Temporizador {
                 actualizarEtiquetaTiempo();
 
                 if (segundosRestantes <= 0) {
+                    juego.finalizoTiempo();
                     temporizador.stop();
                 }
             }
@@ -35,15 +40,25 @@ public class Temporizador {
     }
 
     public void iniciar() {
-        temporizador.start();
+        if (!temporizador.isRunning()) {
+            temporizador.start();
+        }
     }
 
     public void pausar() {
-        temporizador.stop();
+        if (temporizador.isRunning()) {
+            temporizador.stop();
+        }
+    }
+
+    public void reanudar() {
+        temporizador.start();
     }
 
     public void reiniciar() {
-        temporizador.restart();
+        temporizador.stop();
+        segundosRestantes = 10;
+        actualizarEtiquetaTiempo();
     }
 
     public void actualizarEtiquetaTiempo() {

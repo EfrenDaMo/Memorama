@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import memorama.core.EscuchadorJuego;
+import memorama.core.EstadoJuego;
 import memorama.core.Juego;
 import memorama.ui.VistaJuego;
 
@@ -16,12 +19,13 @@ import memorama.ui.VistaJuego;
  *
  * @author efren
  */
-public class InterfazGrafica extends JFrame {
+public class InterfazGrafica extends JFrame implements EscuchadorJuego {
     private final Juego juego;
     private JPanel vistaActual;
 
     public InterfazGrafica(Juego juego) {
         this.juego = juego;
+        juego.addEscuchador(this);
 
         setTitle("MEMORAMA!!!");
         setSize(1280, 720);
@@ -30,6 +34,7 @@ public class InterfazGrafica extends JFrame {
         setLocationRelativeTo(null);
         setVistaActual(new VistaMenuPrincipal(juego));
         setVisible(true);
+        configurarEventosTeclado();
     }
 
     public void setVistaActual(JPanel nuevaVista) {
@@ -47,18 +52,33 @@ public class InterfazGrafica extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (vistaActual instanceof VistaJuego vistajuego) {
-                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        if (juego.estaPausado()) {
-                            juego.resumirJuego();
-                        } else {
-                            juego.pausarJuego();
-                        }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    if (juego.getEstadoActual() == EstadoJuego.JUGANDO) {
+                        juego.pausarJuego();
+                    } else if (juego.getEstadoActual() == EstadoJuego.EN_PAUSA) {
+                        juego.resumirJuego();
                     }
-
-					vistajuego.actualizar();
                 }
             }
         });
+        setFocusable(true);
+        requestFocusInWindow();
+    }
+
+    @Override
+    public void alCambiarEstadoJuego() {
+        EstadoJuego estado = juego.getEstadoActual();
+
+        switch (estado) {
+            case MENU_PRINCIPAL:
+                setVistaActual(new VistaMenuPrincipal(juego));
+                break;
+
+            case JUGANDO:
+                setVistaActual(new VistaJuego(juego));
+                break;
+        }
+
+        requestFocusInWindow();
     }
 }
