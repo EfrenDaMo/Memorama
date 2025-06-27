@@ -19,7 +19,7 @@ public class Jugador {
         this.turno = false;
     }
 
-    public int aumentarPuntaje(int cantidad) {
+    public void aumentarPuntaje(int cantidad) {
         if (cantidad < 0)
             throw new IllegalArgumentException("No se puede decrementar el puntaje");
 
