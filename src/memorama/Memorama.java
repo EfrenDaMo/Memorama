@@ -20,7 +20,6 @@ public class Memorama {
         Juego juego = new Juego();
         GUI gui = new GUI(juego);
 
-        gui.setVisible(true);
         juego.getTemporizador().empezarTemporizador();
     }
 

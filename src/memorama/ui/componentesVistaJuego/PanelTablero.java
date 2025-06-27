@@ -30,7 +30,9 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
         juego.setEscuchadorJuego(this);
 
         setLayout(null);
+        setOpaque(false);
         inicializarComponentes();
+        configurarEventosMouse();
     }
 
     private void inicializarComponentes() {
@@ -48,8 +50,8 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
                     return;
 
                 for (Carta carta : juego.getCartas()) {
-
                     if (carta.hasPuntos(e.getPoint())) {
+                        System.out.println("Carta con id: " + carta.getId() + " se le ha hecho clic");
                         juego.manejarClicCarta(carta);
                         repaint();
                         break;

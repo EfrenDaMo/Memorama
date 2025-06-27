@@ -13,8 +13,8 @@ import java.awt.Font;
 public class Datos {
     public static final int FILAS = 6;
     public static final int COLUMNAS = 7;
-    public static final int MARGEN_Y = 25;
-    public static final int MARGEN_X = 115;
+    public static final int MARGEN_Y = 10;
+    public static final int MARGEN_X = 155;
     public static final int ALTO_CARTA = 120;
     public static final int ANCHO_CARTA = 90;
     public static final int ALTO_PANTALLA = 1280;

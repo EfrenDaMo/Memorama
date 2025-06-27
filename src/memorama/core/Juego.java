@@ -4,98 +4,39 @@
  */
 package memorama.core;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-import memorama.config.Datos;
-import memorama.util.Utilidades;
+import memorama.factory.FabricaCarta;
 
 /**
  *
  * @author efren
  */
 public class Juego {
-    private final ArrayList<Carta> cartas;
     private final Jugador jugador1;
     private final Jugador jugador2;
     private final Temporizador temporizador;
 
     private EscuchadorJuego escuchadorJuego;
+    private ArrayList<Carta> cartas;
     private Jugador jugadorActual;
     private Carta primeraSeleccion;
     private Carta segundaSeleccion;
-    private Boolean bloqueado;
+    private boolean bloqueado;
     private int cartasRestantes;
 
     public Juego() {
-        this.cartas = new ArrayList<>();
+        this.cartas = FabricaCarta.crearCartas();
         this.jugador1 = new Jugador(1);
         this.jugador2 = new Jugador(2);
         this.jugador1.setTurno(true);
         this.jugadorActual = jugador1;
         this.temporizador = new Temporizador();
-        this.cartasRestantes = Datos.TOTAL_PAREJAS * 2;
-
-        inicializarCartas();
-    }
-
-    private void inicializarCartas() {
-        ArrayList<Carta> cartasTemporales = new ArrayList<>();
-
-        for (int i = 0; i < Datos.TOTAL_PAREJAS; i++) {
-            BufferedImage imagenDelantera = cargarImagenParaPareja(i);
-
-            cartasTemporales.add(new Carta(i, Datos.ANCHO_CARTA, Datos.ALTO_CARTA, imagenDelantera));
-            cartasTemporales.add(new Carta(i, Datos.ANCHO_CARTA, Datos.ALTO_CARTA, imagenDelantera));
-        }
-
-        Collections.shuffle(cartasTemporales);
-        asignarPosicionesACartas(cartasTemporales);
-
-    }
-
-    private BufferedImage cargarImagenParaPareja(int id) {
-        try {
-            return Utilidades.cargarImagen("imagen" + (id % 21) + ".png", Datos.ANCHO_CARTA, Datos.ALTO_CARTA);
-        } catch (Exception e) {
-            return crearImagenDePrueba(id);
-        }
-    }
-
-    private BufferedImage crearImagenDePrueba(int id) {
-        BufferedImage img = new BufferedImage(Datos.ANCHO_CARTA, Datos.ALTO_CARTA, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = img.getGraphics();
-
-        g.setColor(new Color((id * 50) % 256, (id * 100) % 256, (id * 150) % 256));
-        g.fillRect(0, 0, Datos.ANCHO_CARTA, Datos.ALTO_CARTA);
-        g.dispose();
-
-        return img;
-    }
-
-    private void asignarPosicionesACartas(ArrayList<Carta> cartasBarajadas) {
-        int index = 0;
-
-        for (int fila = 0; fila < Datos.FILAS; fila++) {
-            for (int columna = 0; columna < Datos.COLUMNAS; columna++) {
-                if (index < cartasBarajadas.size()) {
-                    Carta carta = cartasBarajadas.get(index);
-                    int y = Datos.MARGEN_Y + (Datos.ALTO_CARTA * fila);
-                    int x = Datos.MARGEN_X + (Datos.ANCHO_CARTA * columna);
-
-                    carta.setPosicion(x, y);
-
-                    cartas.add(carta);
-                    index++;
-                }
-            }
-        }
+        this.cartasRestantes = cartas.size();
+        bloqueado = false;
     }
 
     public void manejarClicCarta(Carta carta) {
@@ -119,7 +60,7 @@ public class Juego {
         if (primeraSeleccion.getId() == segundaSeleccion.getId()) {
             jugadorActual.aumentarPuntaje(1);
 
-            Timer temporizador = new Timer(1000, e -> {
+            Timer temporizadorEspera = new Timer(1000, e -> {
                 primeraSeleccion.setEmparejada(true);
                 segundaSeleccion.setEmparejada(true);
                 cartasRestantes -= 2;
@@ -134,8 +75,8 @@ public class Juego {
                     terminarJuego();
                 }
             });
-            temporizador.setRepeats(false);
-            temporizador.start();
+            temporizadorEspera.setRepeats(false);
+            temporizadorEspera.start();
         } else {
             cambiarTurno();
         }
@@ -146,15 +87,15 @@ public class Juego {
         jugadorActual = (jugadorActual == jugador1) ? jugador2 : jugador1;
         jugadorActual.setTurno(true);
 
-        Timer temporizador = new Timer(1000, e -> {
+        Timer temporizadorEspera = new Timer(1000, e -> {
             primeraSeleccion.voltear();
             segundaSeleccion.voltear();
             resetearSelecciones();
             bloqueado = false;
             notificarUI();
         });
-        temporizador.setRepeats(false);
-        temporizador.start();
+        temporizadorEspera.setRepeats(false);
+        temporizadorEspera.start();
     }
 
     private void resetearSelecciones() {
@@ -179,6 +120,13 @@ public class Juego {
         escuchadorJuego.enCambioDeEstadoJuego();
     }
 
+    public void reiniciarJuego() {
+        this.cartas = FabricaCarta.crearCartas();
+        this.cartasRestantes = cartas.size();
+        jugador1.resetearPuntaje();
+        jugador2.resetearPuntaje();
+    }
+
     public void setEscuchadorJuego(EscuchadorJuego escuchadorJuego) {
         this.escuchadorJuego = escuchadorJuego;
     }
@@ -199,7 +147,7 @@ public class Juego {
         return temporizador;
     }
 
-    public Boolean isBloqueado() {
+    public boolean isBloqueado() {
         return bloqueado;
     }
 }

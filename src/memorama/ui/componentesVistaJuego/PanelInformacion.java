@@ -33,6 +33,7 @@ public class PanelInformacion extends JPanel {
     public PanelInformacion(Jugador jugador) {
         this.jugador = jugador;
 
+        jugador.agregarPropertyChangeListener(e -> actualizar());
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(213, 720));
         inicializarComponentes();

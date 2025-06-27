@@ -4,6 +4,9 @@
  */
 package memorama.core;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  *
  * @author efren
@@ -14,17 +17,29 @@ public class Jugador {
     private int puntaje;
     private boolean turno;
 
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     public Jugador(int id) {
         this.id = id;
         this.puntaje = 0;
         this.turno = false;
     }
 
+    public void agregarPropertyChangeListener(PropertyChangeListener l) {
+        support.addPropertyChangeListener(l);
+    }
+
     public void aumentarPuntaje(int cantidad) {
         if (cantidad < 0)
             throw new IllegalArgumentException("No se puede decrementar el puntaje");
 
-        puntaje += cantidad;
+        int actual = this.puntaje;
+        this.puntaje += cantidad;
+        support.firePropertyChange("puntaje", actual, puntaje);
+    }
+
+    public void resetearPuntaje() {
+        puntaje = 0;
     }
 
     public int getId() {
@@ -40,6 +55,8 @@ public class Jugador {
     }
 
     public void setTurno(boolean turno) {
+        boolean actual = this.turno;
         this.turno = turno;
+        support.firePropertyChange("turno", actual, turno);
     }
 }
