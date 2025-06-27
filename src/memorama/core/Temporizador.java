@@ -62,10 +62,18 @@ public class Temporizador {
     }
 
     public void actualizarEtiquetaTiempo() {
-        int mins = segundosRestantes / 60;
-        int secs = segundosRestantes % 60;
-
-        etiquetaTiempo.setText(String.format("%02d:%02d", mins, secs));
+        SwingUtilities.invokeLater(() -> {
+            try {
+                int mins = segundosRestantes / 60;
+                int secs = segundosRestantes % 60;
+                etiquetaTiempo.setText(String.format("%02d:%02d", mins, secs));
+            } catch (Exception e) {
+                Utilidades.mostrarDialogoError(
+                        null,
+                        "Error actualizando tiempo: " + e.getMessage(),
+                        "Error de UI");
+            }
+        });
     }
 
     public JLabel getEtiquetaTiempo() {

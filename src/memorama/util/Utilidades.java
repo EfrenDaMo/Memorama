@@ -12,6 +12,8 @@ import java.util.function.Consumer;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import java.awt.image.BufferedImage;
 import memorama.config.Datos;
@@ -83,4 +85,29 @@ public class Utilidades {
 
         return boton;
     }
+
+    public static void mostrarDialogoError(Component parent, String mensaje, String titulo) {
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(
+                    parent,
+                    "<html><div style='text-align: center; padding: 10px;'>" +
+                            "<b style='color: #D32F2F; font-size: 14px;'>" + mensaje + "</b>" +
+                            "</div></html>",
+                    titulo,
+                    JOptionPane.ERROR_MESSAGE);
+        });
+    }
+
+    public static void mostrarDialogoAdvertencia(Component parent, String mensaje, String titulo) {
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(
+                    parent,
+                    "<html><div style='text-align: center; padding: 10px;'>" +
+                            "<b style='color: #FF9800; font-size: 14px;'>" + mensaje + "</b>" +
+                            "</div></html>",
+                    titulo,
+                    JOptionPane.WARNING_MESSAGE);
+        });
+    }
+
 }

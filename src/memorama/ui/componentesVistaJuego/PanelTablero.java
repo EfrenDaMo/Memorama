@@ -37,9 +37,14 @@ public class PanelTablero extends JPanel implements EscuchadorJuego {
     }
 
     private void inicializar() {
+        String ruta = "reversaCarta.png";
         try {
-            Carta.setImagenTrasera(Utilidades.cargarImagen("reversaCarta.png", Datos.ANCHO_CARTA, Datos.ALTO_CARTA));
+            Carta.setImagenTrasera(Utilidades.cargarImagen(ruta, Datos.ANCHO_CARTA, Datos.ALTO_CARTA));
         } catch (Exception e) {
+            Utilidades.mostrarDialogoAdvertencia(
+                    null,
+                    "No se pudo cargar el reverso de carta<br>Usando generado automático",
+                    "Recurso faltante");
             Carta.generarImagenReverosRespaldo();
         }
     }

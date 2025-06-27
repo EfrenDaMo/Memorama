@@ -11,6 +11,7 @@ import memorama.core.Juego;
 import memorama.util.Utilidades;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -39,6 +40,10 @@ public class PanelJuego extends JPanel {
             imagenFondo = Utilidades.cargarImagen("fondoTablero.png");
         } catch (Exception e) {
             imagenFondo = null;
+            Utilidades.mostrarDialogoAdvertencia(
+                    null,
+                    "No se pudo cargar el fondo de tablero usando alternativa",
+                    "Falta de recurso");
         }
 
         etiquetaTiempo = juego.getTemporizador().getEtiquetaTiempo();
@@ -53,6 +58,9 @@ public class PanelJuego extends JPanel {
         super.paintComponent(g);
         if (imagenFondo != null) {
             g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+        } else {
+            g.setColor(Color.GRAY);
+            g.fillRect(0, 0, getWidth(), getHeight());
         }
     }
 }
