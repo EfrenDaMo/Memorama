@@ -26,3 +26,4 @@ replay_pid*
 # Project stuff
 nbproject/
 src/memorama/recursos/
+/build/

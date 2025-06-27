@@ -4,17 +4,24 @@
  */
 package memorama;
 
+import memorama.core.Juego;
+import memorama.ui.GUI;
+
 /**
  *
  * @author efren
  */
 public class Memorama {
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String[] args) {
-		// TODO code application logic here
-	}
-	
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Juego juego = new Juego();
+        GUI gui = new GUI(juego);
+
+        gui.setVisible(true);
+        juego.getTemporizador().empezarTemporizador();
+    }
+
 }

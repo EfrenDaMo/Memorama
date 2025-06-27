@@ -17,6 +17,8 @@ public class Datos {
     public static final int MARGEN_X = 115;
     public static final int ALTO_CARTA = 120;
     public static final int ANCHO_CARTA = 90;
+    public static final int ALTO_PANTALLA = 1280;
+    public static final int ANCHO_PANTALLA = 720;
     public static final int TOTAL_PAREJAS = (FILAS * COLUMNAS) / 2;
     public static final Font FUENTE = new Font("Dialog", Font.BOLD, 24);
 }

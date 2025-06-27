@@ -5,9 +5,16 @@
 package memorama.util;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.function.Consumer;
+
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import java.awt.image.BufferedImage;
+import memorama.config.Datos;
 
 /**
  *
@@ -17,7 +24,7 @@ public class Utilidades {
     private static File obtenerArchivo(String ruta) {
         File archivo = new File(ruta);
         if (!archivo.exists())
-            archivo = new File("src/memoramvp/recursos/" + ruta);
+            archivo = new File("src/memorama/recursos/" + ruta);
 
         return archivo;
     }
@@ -37,5 +44,22 @@ public class Utilidades {
         g2d.dispose();
 
         return imagenEscalada;
+    }
+
+    public static JLabel crearEtiqueta(String texto) {
+        JLabel etiqueta = new JLabel(texto);
+
+        etiqueta.setFont(Datos.FUENTE);
+        etiqueta.setHorizontalAlignment(JLabel.CENTER);
+
+        return etiqueta;
+    }
+
+    public static JButton crearBoton(String texto, Consumer<ActionEvent> handler) {
+        JButton boton = new JButton(texto);
+
+        boton.addActionListener(e -> handler.accept(e));
+
+        return boton;
     }
 }
