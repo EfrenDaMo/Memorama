@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 import memorama.core.EscuchadorJuego;
 import memorama.core.EstadoJuego;
 import memorama.core.Juego;
-import memorama.ui.VistaMenuPausa;
 import memorama.ui.componentesVistaJuego.PanelInformacion;
 import memorama.ui.componentesVistaJuego.PanelJuego;
 
@@ -25,10 +24,9 @@ import memorama.ui.componentesVistaJuego.PanelJuego;
 public class VistaJuego extends JPanel implements EscuchadorJuego {
     private final Juego juego;
     private final VistaMenuPausa vistaMenuPausa;
-
-    private PanelInformacion panelJugador1;
-    private PanelJuego panelJuego;
-    private PanelInformacion panelJugador2;
+    private final PanelInformacion panelJugador1;
+    private final PanelJuego panelJuego;
+    private final PanelInformacion panelJugador2;
 
     public VistaJuego(Juego juego) {
         this.juego = juego;

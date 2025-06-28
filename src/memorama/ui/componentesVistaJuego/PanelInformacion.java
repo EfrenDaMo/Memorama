@@ -6,14 +6,11 @@ package memorama.ui.componentesVistaJuego;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.util.function.Consumer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import memorama.config.Datos;
 import memorama.core.Juego;
 import memorama.core.Jugador;
 import memorama.util.Utilidades;

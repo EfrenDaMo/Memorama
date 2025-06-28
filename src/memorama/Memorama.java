@@ -4,6 +4,8 @@
  */
 package memorama;
 
+import javax.swing.SwingUtilities;
+
 import memorama.core.Juego;
 import memorama.ui.InterfazGrafica;
 
@@ -17,8 +19,10 @@ public class Memorama {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Juego juego = new Juego();
-        InterfazGrafica interfaz = new InterfazGrafica(juego);
+        SwingUtilities.invokeLater(() -> {
+			Juego juego = new Juego();
+			InterfazGrafica interfaz = new InterfazGrafica(juego);
+			interfaz.setVisible(true);
+		});
     }
-
 }

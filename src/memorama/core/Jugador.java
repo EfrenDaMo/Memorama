@@ -16,7 +16,7 @@ public class Jugador {
 
     private int puntaje;
     private boolean turno;
-    private PropertyChangeSupport soporte = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport soporte = new PropertyChangeSupport(this);
 
     public Jugador(int id) {
         this.id = id;

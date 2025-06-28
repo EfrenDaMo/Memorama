@@ -4,13 +4,10 @@
  */
 package memorama.ui.componentesVistaJuego;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import memorama.config.Datos;

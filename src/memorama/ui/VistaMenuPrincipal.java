@@ -42,7 +42,8 @@ public class VistaMenuPrincipal extends JPanel {
     }
 
     private void inicializarComponentes() {
-        add(etiquetaTitulo = Utilidades.crearEtiquetaMenu("MEMORAMA!!!"), BorderLayout.NORTH);
+		etiquetaTitulo = Utilidades.crearEtiquetaMenu("MEMORAMA!!!");
+        add(etiquetaTitulo, BorderLayout.NORTH);
 
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));

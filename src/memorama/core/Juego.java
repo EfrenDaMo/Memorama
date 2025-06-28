@@ -7,9 +7,6 @@ package memorama.core;
 import java.util.ArrayList;
 import javax.swing.Timer;
 
-import memorama.core.EscuchadorJuego;
-import memorama.core.EstadoJuego;
-import memorama.core.Jugador;
 import memorama.factory.FabricaCarta;
 
 /**
@@ -20,18 +17,17 @@ public class Juego {
     private final Jugador jugador1;
     private final Jugador jugador2;
     private final Temporizador temporizador;
+    private final MaquinaEstadoJuego maquinaEstado;
+    private final ArrayList<EscuchadorJuego> escuchadores = new ArrayList<>();
 
     private ArrayList<Carta> cartas;
     private Jugador jugadorActual;
     private Carta primeraCartaSeleccionada;
     private Carta segundaCartaSeleccionada;
-    private boolean pausado;
     private boolean bloqueado;
     private boolean abandonado;
     private boolean finalizoTiempo;
     private int cartasRestantes;
-    private MaquinaEstadoJuego maquinaEstado;
-    private ArrayList<EscuchadorJuego> escuchadores = new ArrayList<>();
 
     public Juego() {
         this.cartas = FabricaCarta.crearCartas();

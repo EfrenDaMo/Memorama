@@ -16,7 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.text.Utilities;
 
 import memorama.core.Juego;
 import memorama.config.Datos;

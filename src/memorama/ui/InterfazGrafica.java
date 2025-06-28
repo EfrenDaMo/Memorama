@@ -13,13 +13,12 @@ import javax.swing.JPanel;
 import memorama.core.EscuchadorJuego;
 import memorama.core.EstadoJuego;
 import memorama.core.Juego;
-import memorama.ui.VistaJuego;
 
 /**
  *
  * @author efren
  */
-public class InterfazGrafica extends JFrame implements EscuchadorJuego {
+public final class InterfazGrafica extends JFrame implements EscuchadorJuego {
     private final Juego juego;
     private JPanel vistaActual;
 
@@ -33,7 +32,6 @@ public class InterfazGrafica extends JFrame implements EscuchadorJuego {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVistaActual(new VistaMenuPrincipal(juego));
-        setVisible(true);
         configurarEventosTeclado();
     }
 
@@ -70,13 +68,9 @@ public class InterfazGrafica extends JFrame implements EscuchadorJuego {
         EstadoJuego estado = juego.getEstadoActual();
 
         switch (estado) {
-            case MENU_PRINCIPAL:
-                setVistaActual(new VistaMenuPrincipal(juego));
-                break;
+            case MENU_PRINCIPAL -> setVistaActual(new VistaMenuPrincipal(juego));
 
-            case JUGANDO:
-                setVistaActual(new VistaJuego(juego));
-                break;
+            case JUGANDO -> setVistaActual(new VistaJuego(juego));
         }
 
         requestFocusInWindow();

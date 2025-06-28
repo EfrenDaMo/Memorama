@@ -7,7 +7,6 @@ package memorama.core;
 import javax.swing.*;
 import java.awt.event.*;
 
-import memorama.core.Juego;
 import memorama.util.Utilidades;
 
 /**
@@ -25,18 +24,15 @@ public class Temporizador {
         this.juego = juego;
         etiquetaTiempo = Utilidades.crearEtiqueta("05:00");
 
-        temporizador = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                segundosRestantes--;
-                actualizarEtiquetaTiempo();
-
-                if (segundosRestantes <= 0) {
-                    juego.finalizoTiempo();
-                    temporizador.stop();
-                }
-            }
-        });
+        temporizador = new Timer(1000, (ActionEvent e) -> {
+			segundosRestantes--;
+			actualizarEtiquetaTiempo();
+			
+			if (segundosRestantes <= 0) {
+				juego.finalizoTiempo();
+				temporizador.stop();
+			}
+		});
     }
 
     public void iniciar() {
